@@ -153,7 +153,7 @@ It covers **17+ languages and frameworks** with over **14,000 lines** of careful
       <td>~190</td>
     </tr>
     <tr>
-      <td rowspan="2"><strong>Architecture</strong></td>
+      <td rowspan="3"><strong>Cross-Cutting</strong></td>
       <td>&#127963;&#65039; Architecture Design Review</td>
       <td><code>reference/architecture-review-guide.md</code></td>
       <td>~470</td>
@@ -161,7 +161,12 @@ It covers **17+ languages and frameworks** with over **14,000 lines** of careful
     <tr>
       <td>&#9889; Performance Review</td>
       <td><code>reference/performance-review-guide.md</code></td>
-      <td>~750</td>
+      <td>~850</td>
+    </tr>
+    <tr>
+      <td>&#128269; Universal Quality Anti-Patterns</td>
+      <td><code>reference/code-quality-universal.md</code></td>
+      <td>~320</td>
     </tr>
   </tbody>
 </table>
@@ -231,6 +236,7 @@ code-review-skill/
 |   +-- qt.md                             # Qt object model, signals/slots, GUI perf
 |   +-- css-less-sass.md                  # CSS/Less/Sass variables, responsive design
 |   +-- architecture-review-guide.md      # SOLID, anti-patterns, coupling/cohesion
+|   +-- code-quality-universal.md        # Reuse audit, parameter sprawl, TOCTOU, no-op updates
 |   +-- performance-review-guide.md       # Core Web Vitals, N+1, memory leaks
 |   +-- security-review-guide.md          # Security checklist (all languages)
 |   +-- common-bugs-checklist.md          # Language-specific bug patterns
@@ -415,7 +421,8 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 | | &#128297; C++ | `reference/cpp.md` | ~300 |
 | | &#128421;&#65039; Qt 框架 | `reference/qt.md` | ~190 |
 | **架构** | &#127963;&#65039; 架构设计审查 | `reference/architecture-review-guide.md` | ~470 |
-| | &#9889; 性能审查 | `reference/performance-review-guide.md` | ~750 |
+| | &#9889; 性能审查 | `reference/performance-review-guide.md` | ~850 |
+| | &#128269; 通用质量反模式 | `reference/code-quality-universal.md` | ~320 |
 
 ---
 
@@ -482,6 +489,7 @@ code-review-skill/
 |   +-- qt.md                             # Qt 对象模型、信号/槽、GUI 性能
 |   +-- css-less-sass.md                  # CSS/Less/Sass 变量、响应式设计
 |   +-- architecture-review-guide.md      # SOLID、反模式、耦合度分析
+|   +-- code-quality-universal.md        # 复用审查、参数膨胀、抽象泄漏、TOCTOU
 |   +-- performance-review-guide.md       # Core Web Vitals、N+1、内存泄漏
 |   +-- security-review-guide.md          # 安全审查清单（全语言通用）
 |   +-- common-bugs-checklist.md          # 各语言常见 Bug 模式

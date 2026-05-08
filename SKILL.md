@@ -117,6 +117,7 @@ For each file, check:
 - **Security** - Input validation, injection risks, XSS, sensitive data
 - **Performance** - N+1 queries, unnecessary loops, memory leaks
 - **Maintainability** - Clear names, single responsibility, comments
+- **Reuse** - Before accepting new code, search for existing utilities/helpers that could replace it. Check adjacent files and shared modules for similar patterns. See [Universal Quality Guide](reference/code-quality-universal.md) for anti-patterns like parameter sprawl, leaky abstractions, nested conditionals, stringly-typed code, TOCTOU, and no-op updates.
 
 ### Phase 4: Summary & Decision (2-3 minutes)
 
@@ -192,6 +193,14 @@ Use labels to indicate priority:
 | **C++** | [C++ Guide](reference/cpp.md) | RAII, 生命周期, Rule of 0/3/5, 异常安全 |
 | **CSS/Less/Sass** | [CSS Guide](reference/css-less-sass.md) | 变量规范, !important, 性能优化, 响应式, 兼容性 |
 | **Qt** | [Qt Guide](reference/qt.md) | 对象模型, 信号/槽, 内存管理, 线程安全, 性能 |
+
+## Cross-Cutting Guides
+
+Language-agnostic patterns applicable to all code reviews:
+
+| Topic | Reference File | Key Topics |
+|-------|----------------|------------|
+| **Universal Quality** | [Universal Quality Guide](reference/code-quality-universal.md) | Reuse audit, parameter sprawl, leaky abstractions, nested conditionals, stringly-typed code, TOCTOU, no-op updates, redundant state |
 
 ## Additional Resources
 
