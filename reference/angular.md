@@ -253,7 +253,7 @@ this.cdr.markForCheck();
 
 | 触发器 | 说明 |
 |--------|------|
-| `signal.set()` / `.update() | Signal 更新自动触发 |
+| `signal.set()` / `.update()` | Signal 更新自动触发 |
 | `ChangeDetectorRef.markForCheck()` | 手动标记 |
 | `ComponentRef.setInput()` | 输入绑定 |
 | 模板事件监听器回调 | 用户交互 |

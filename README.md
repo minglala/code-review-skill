@@ -65,7 +65,7 @@ It covers **17+ languages and frameworks** with over **14,000 lines** of careful
   </thead>
   <tbody>
     <tr>
-      <td rowspan="7"><strong>Frontend</strong></td>
+      <td rowspan="6"><strong>Frontend</strong></td>
       <td>&#9883;&#65039; React 19 / Next.js / TanStack Query v5</td>
       <td><code>reference/react.md</code></td>
       <td>~870</td>
@@ -96,18 +96,18 @@ It covers **17+ languages and frameworks** with over **14,000 lines** of careful
       <td>~540</td>
     </tr>
     <tr>
-      <td>&#128230; NestJS</td>
-      <td><code>reference/nestjs.md</code></td>
-      <td>~590</td>
-    </tr>
-    <tr>
-      <td rowspan="6"><strong>Backend</strong></td>
+      <td rowspan="7"><strong>Backend</strong></td>
       <td>&#9749; Java 17/21 + Spring Boot 3</td>
       <td><code>reference/java.md</code></td>
       <td>~800</td>
     </tr>
     <tr>
-      <td>&#128013; Python / Django / DRF</td>
+      <td>&#128230; NestJS</td>
+      <td><code>reference/nestjs.md</code></td>
+      <td>~590</td>
+    </tr>
+    <tr>
+      <td>&#128013; Django / DRF</td>
       <td><code>reference/django.md</code></td>
       <td>~1,030</td>
     </tr>
@@ -403,9 +403,9 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 | | &#128293; Svelte 5 / SvelteKit | `reference/svelte.md` | ~1,060 |
 | | &#127912; CSS / Less / Sass | `reference/css-less-sass.md` | ~660 |
 | | &#128311; TypeScript | `reference/typescript.md` | ~540 |
-| | &#128230; NestJS | `reference/nestjs.md` | ~590 |
 | **后端** | &#9749; Java 17/21 + Spring Boot 3 | `reference/java.md` | ~800 |
-| | &#128013; Python / Django / DRF | `reference/django.md` | ~1,030 |
+| | &#128230; NestJS | `reference/nestjs.md` | ~590 |
+| | &#128013; Django / DRF | `reference/django.md` | ~1,030 |
 | | &#128013; Python | `reference/python.md` | ~1,070 |
 | | &#128057; Go | `reference/go.md` | ~990 |
 | | &#129408; Rust | `reference/rust.md` | ~840 |
