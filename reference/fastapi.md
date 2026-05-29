@@ -11,6 +11,7 @@
 - [Security](#security)
 - [Test-Driven Verification](#test-driven-verification)
 - [Review Checklist](#review-checklist)
+- [References](#references)
 
 ---
 
