@@ -418,9 +418,9 @@ Also check: secrets read from config/env (not hard-coded), `HTTPException` detai
 
 ## Test-Driven Verification
 
-> Inspired by the test-driven development discipline: *if you didn't watch the test fail, you don't know it tests the right thing.* In review, the same idea gives the reviewer a way to **prove** a bug instead of asserting one in prose.
+> Inspired by the test-driven development discipline: *if you didn't watch the test fail, you don't know it tests the right thing.* This matters even more for a coding agent than for a human reviewer. An agent's reading and reasoning are fallible — it can misread control flow, hallucinate a guarantee that isn't there, or rationalize a comfortable conclusion — so a prose verdict like "this looks safe" carries little weight on its own. An executable test is the one piece of **objective ground truth** the agent fully controls: it either passes or it doesn't, regardless of how confident the reasoning felt. That is what makes tests the agent's anchor of confidence. Reviewing the same way the discipline writes code — reproduce, don't assert — turns a hunch into proof.
 
-A natural-language review comment ("this might let users delete each other's data") is a hypothesis. FastAPI makes it cheap to **convert that hypothesis into a failing test** — an in-process client (`httpx.AsyncClient` over `ASGITransport`) runs the whole app, and `app.dependency_overrides` swaps out auth and the database without patching internals. For a coding agent doing the review, this is the strongest validation available: don't guess, reproduce.
+A natural-language review comment ("this might let users delete each other's data") is exactly that kind of fallible hypothesis. FastAPI makes the ground truth cheap to obtain: an in-process client (`httpx.AsyncClient` over `ASGITransport`) runs the whole app, and `app.dependency_overrides` swaps out auth and the database without patching internals. So instead of trusting its own read of the code, the agent settles the question by reproduction.
 
 ### Reproduce a suspected bug with a failing test (Verify RED)
 
