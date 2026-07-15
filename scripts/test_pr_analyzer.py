@@ -451,5 +451,15 @@ class MarkdownReportTest(unittest.TestCase):
         self.assertEqual(report_path.parent, Path(tmpdir))
 
 
+class GuidanceMessageTest(unittest.TestCase):
+    def test_no_diff_guidance_contains_main_head_help(self):
+        message = pr_analyzer.get_no_diff_guidance()
+        self.assertIn('No diff content provided.', message)
+        self.assertIn('git diff main...HEAD', message)
+        self.assertIn('git diff origin/main...HEAD', message)
+        self.assertIn('git diff master...HEAD', message)
+        self.assertIn('git branch -a', message)
+
+
 if __name__ == '__main__':
     unittest.main()
