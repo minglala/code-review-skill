@@ -102,7 +102,7 @@ Before diving into code, understand:
 4. Understand the business requirement
 5. Note any relevant architectural decisions
 
-> For large diffs, pipe the diff through [`scripts/pr-analyzer.py`](scripts/pr-analyzer.py) (`git diff main...HEAD | python scripts/pr-analyzer.py`) to triage complexity and get a suggested review approach before reading; it also writes `pr-analysis-report-YYYYMMDD-HHMM.md` to the project root.
+> For large diffs, pipe the diff through [`scripts/pr-analyzer.py`](scripts/pr-analyzer.py) (`git diff main...HEAD | python scripts/pr-analyzer.py`) to triage complexity and get a suggested review approach before reading; it writes a pre-review complexity file `pr-analysis-report-YYYYMMDD-HHMM.md` to the project root.
 
 ### Phase 2: High-Level Review (5-10 minutes)
 
@@ -133,6 +133,18 @@ For each file, check:
    - 💬 Comment (minor suggestions)
    - 🔄 Request Changes (must address)
 4. Offer to pair if complex
+
+### Required Deliverable (Must Write to Project Root)
+
+After completing the full review, always write the **complete code review analysis report** as Markdown to the project root (this is different from the pre-review `pr-analyzer.py` output).
+
+- Filename format: `code-review-report-YYYYMMDD-HHMM.md`
+- The report should include:
+  - Review scope and overall summary
+  - Strengths / positive observations
+  - Findings grouped by severity (`blocking`, `important`, `nit`, `suggestion`, `learning`, `praise`)
+  - Security, performance, and testing assessment
+  - Final decision (`Approve` / `Comment` / `Request Changes`)
 
 ## Review Techniques
 
