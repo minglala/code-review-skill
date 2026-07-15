@@ -13,6 +13,7 @@ import os
 import sys
 import re
 import argparse
+from pathlib import Path
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import List, Dict, Optional
@@ -402,10 +403,77 @@ def print_analysis(analysis: PRAnalysis, show_files: bool = False):
     print("\n" + "=" * 60)
 
 
+def generate_markdown_report(analysis: PRAnalysis, show_files: bool = False) -> str:
+    """Generate analysis report as markdown."""
+    total_changes = analysis.total_additions + analysis.total_deletions
+    lines = [
+        "# PR Analysis Report",
+        "",
+        "## Summary",
+        f"- Files changed: {analysis.total_files}",
+        f"- Additions: +{analysis.total_additions}",
+        f"- Deletions: -{analysis.total_deletions}",
+        f"- Total changes: {total_changes}",
+        "",
+        "## Size & Complexity",
+        f"- Size: {analysis.size_category}",
+        f"- Complexity score: {analysis.complexity_score}/1.0",
+        f"- Estimated review time: ~{analysis.estimated_review_time} minutes",
+        "",
+        "## Risk Factors",
+    ]
+
+    if analysis.risk_factors:
+        lines.extend([f"- {risk}" for risk in analysis.risk_factors])
+    else:
+        lines.append("- None")
+
+    lines.extend(["", "## Suggestions"])
+    lines.extend([f"- {suggestion}" for suggestion in analysis.suggestions])
+
+    if show_files:
+        lines.extend(["", "## Files"])
+        by_lang: Dict[str, List[FileStats]] = defaultdict(list)
+        for f in analysis.files:
+            by_lang[f.language].append(f)
+
+        for lang, lang_files in sorted(by_lang.items()):
+            lines.append(f"### {lang}")
+            for f in lang_files:
+                marker = "test" if f.is_test else "config" if f.is_config else "code"
+                lines.append(f"- `{f.filename}` (+{f.additions}/-{f.deletions}) [{marker}]")
+            lines.append("")
+
+        if lines[-1] == "":
+            lines.pop()
+
+    return "\n".join(lines) + "\n"
+
+
+def write_markdown_report(
+    analysis: PRAnalysis,
+    output_path: Optional[Path] = None,
+    show_files: bool = False
+) -> Path:
+    """Write markdown report to project root by default."""
+    if output_path is None:
+        output_path = Path(__file__).resolve().parent.parent / "pr-analysis-report.md"
+    else:
+        output_path = Path(output_path)
+
+    markdown = generate_markdown_report(analysis, show_files=show_files)
+    output_path.write_text(markdown, encoding='utf-8')
+    return output_path
+
+
 def main():
     parser = argparse.ArgumentParser(description='Analyze PR complexity')
     parser.add_argument('--diff-file', '-f', help='Path to diff file')
     parser.add_argument('--stats', '-s', action='store_true', help='Show file details')
+    parser.add_argument(
+        '--md-output',
+        help='Markdown report output path (defaults to project root: pr-analysis-report.md)'
+    )
     args = parser.parse_args()
 
     # Read diff from file or stdin
@@ -429,6 +497,12 @@ def main():
 
     analysis = analyze_pr(diff_content)
     print_analysis(analysis, show_files=args.stats)
+    report_path = write_markdown_report(
+        analysis,
+        output_path=Path(args.md_output) if args.md_output else None,
+        show_files=args.stats
+    )
+    print(f"Markdown report written to: {report_path}")
 
 
 if __name__ == '__main__':
