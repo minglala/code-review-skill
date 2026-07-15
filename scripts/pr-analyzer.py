@@ -452,9 +452,9 @@ def generate_markdown_report(analysis: PRAnalysis, show_files: bool = False) -> 
 
 
 def get_default_report_path(current_time: Optional[datetime] = None) -> Path:
-    """Build default markdown report path with minute-level timestamp."""
+    """Build default markdown report path in current working directory."""
     timestamp = (current_time or datetime.now()).strftime("%Y%m%d-%H%M")
-    return Path(__file__).resolve().parent.parent / f"pr-analysis-report-{timestamp}.md"
+    return Path.cwd() / f"pr-analysis-report-{timestamp}.md"
 
 
 def write_markdown_report(
