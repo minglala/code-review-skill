@@ -6,6 +6,7 @@ import os
 import tempfile
 import unittest
 from datetime import datetime
+from pathlib import Path
 
 # The script has a hyphen in its name, so load it by path.
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -436,6 +437,28 @@ class MarkdownReportTest(unittest.TestCase):
         fixed_time = datetime(2026, 7, 15, 14, 37, 55)
         report_path = pr_analyzer.get_default_report_path(current_time=fixed_time)
         self.assertTrue(str(report_path).endswith('pr-analysis-report-20260715-1437.md'))
+
+    def test_get_default_report_path_uses_current_working_directory(self):
+        fixed_time = datetime(2026, 7, 15, 14, 37, 55)
+        original_cwd = os.getcwd()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            try:
+                os.chdir(tmpdir)
+                report_path = pr_analyzer.get_default_report_path(current_time=fixed_time)
+            finally:
+                os.chdir(original_cwd)
+
+        self.assertEqual(report_path.parent, Path(tmpdir))
+
+
+class GuidanceMessageTest(unittest.TestCase):
+    def test_no_diff_guidance_contains_main_head_help(self):
+        message = pr_analyzer.get_no_diff_guidance()
+        self.assertIn('No diff content provided.', message)
+        self.assertIn('git diff main...HEAD', message)
+        self.assertIn('git diff origin/main...HEAD', message)
+        self.assertIn('git diff master...HEAD', message)
+        self.assertIn('git branch -a', message)
 
 
 if __name__ == '__main__':

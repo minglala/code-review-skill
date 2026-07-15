@@ -452,9 +452,9 @@ def generate_markdown_report(analysis: PRAnalysis, show_files: bool = False) -> 
 
 
 def get_default_report_path(current_time: Optional[datetime] = None) -> Path:
-    """Build default markdown report path with minute-level timestamp."""
+    """Build default markdown report path in current working directory."""
     timestamp = (current_time or datetime.now()).strftime("%Y%m%d-%H%M")
-    return Path(__file__).resolve().parent.parent / f"pr-analysis-report-{timestamp}.md"
+    return Path.cwd() / f"pr-analysis-report-{timestamp}.md"
 
 
 def write_markdown_report(
@@ -473,13 +473,28 @@ def write_markdown_report(
     return output_path
 
 
+def get_no_diff_guidance() -> str:
+    """Build user-facing guidance when no diff content is available."""
+    return "\n".join([
+        "No diff content provided.",
+        "",
+        "If you ran `git diff main...HEAD | python scripts/pr-analyzer.py`,",
+        "the base branch may not exist locally.",
+        "Try one of these:",
+        "- `git branch -a` (check available branches)",
+        "- `git diff origin/main...HEAD | python scripts/pr-analyzer.py`",
+        "- `git diff master...HEAD | python scripts/pr-analyzer.py`",
+        "- `git diff | python scripts/pr-analyzer.py`",
+    ])
+
+
 def main():
     parser = argparse.ArgumentParser(description='Analyze PR complexity')
     parser.add_argument('--diff-file', '-f', help='Path to diff file')
     parser.add_argument('--stats', '-s', action='store_true', help='Show file details')
     parser.add_argument(
         '--md-output',
-        help='Markdown report output path (defaults to project root: pr-analysis-report-YYYYMMDD-HHMM.md)'
+        help='Markdown report output path (defaults to current directory: pr-analysis-report-YYYYMMDD-HHMM.md)'
     )
     args = parser.parse_args()
 
@@ -499,7 +514,7 @@ def main():
         sys.exit(1)
 
     if not diff_content.strip():
-        print("No diff content provided")
+        print(get_no_diff_guidance())
         sys.exit(1)
 
     analysis = analyze_pr(diff_content)
