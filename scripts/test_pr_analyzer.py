@@ -3,6 +3,7 @@
 
 import importlib.util
 import os
+import tempfile
 import unittest
 
 # The script has a hyphen in its name, so load it by path.
@@ -374,6 +375,61 @@ class AnalyzePRTest(unittest.TestCase):
         analysis = pr_analyzer.analyze_pr("")
         self.assertEqual(analysis.total_files, 0)
         self.assertEqual(analysis.complexity_score, 0.0)
+
+
+class MarkdownReportTest(unittest.TestCase):
+    def _sample_analysis(self):
+        return pr_analyzer.PRAnalysis(
+            total_files=2,
+            total_additions=15,
+            total_deletions=5,
+            files=[
+                FileStats(filename='src/app.py', additions=10, deletions=5, language='Python'),
+                FileStats(
+                    filename='tests/test_app.py',
+                    additions=5,
+                    deletions=0,
+                    language='Python',
+                    is_test=True
+                ),
+            ],
+            complexity_score=0.34,
+            size_category='S (Small)',
+            estimated_review_time=12,
+            risk_factors=[],
+            suggestions=['Standard review process should suffice'],
+        )
+
+    def test_generate_markdown_report_contains_key_sections(self):
+        report = pr_analyzer.generate_markdown_report(self._sample_analysis())
+        self.assertIn('# PR Analysis Report', report)
+        self.assertIn('## Summary', report)
+        self.assertIn('## Risk Factors', report)
+        self.assertIn('- None', report)
+        self.assertIn('## Suggestions', report)
+
+    def test_generate_markdown_report_with_files(self):
+        report = pr_analyzer.generate_markdown_report(
+            self._sample_analysis(), show_files=True
+        )
+        self.assertIn('## Files', report)
+        self.assertIn('### Python', report)
+        self.assertIn('`src/app.py` (+10/-5) [code]', report)
+        self.assertIn('`tests/test_app.py` (+5/-0) [test]', report)
+
+    def test_write_markdown_report_to_custom_path(self):
+        analysis = self._sample_analysis()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output = os.path.join(tmpdir, 'report.md')
+            written_path = pr_analyzer.write_markdown_report(
+                analysis, output_path=output, show_files=True
+            )
+            self.assertEqual(str(written_path), output)
+            self.assertTrue(os.path.exists(output))
+            with open(output, 'r', encoding='utf-8') as f:
+                content = f.read()
+            self.assertIn('# PR Analysis Report', content)
+            self.assertIn('## Files', content)
 
 
 if __name__ == '__main__':
