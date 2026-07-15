@@ -13,6 +13,7 @@ import os
 import sys
 import re
 import argparse
+from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
 from dataclasses import dataclass
@@ -450,6 +451,12 @@ def generate_markdown_report(analysis: PRAnalysis, show_files: bool = False) -> 
     return "\n".join(lines) + "\n"
 
 
+def get_default_report_path(current_time: Optional[datetime] = None) -> Path:
+    """Build default markdown report path with minute-level timestamp."""
+    timestamp = (current_time or datetime.now()).strftime("%Y%m%d-%H%M")
+    return Path(__file__).resolve().parent.parent / f"pr-analysis-report-{timestamp}.md"
+
+
 def write_markdown_report(
     analysis: PRAnalysis,
     output_path: Optional[Path] = None,
@@ -457,7 +464,7 @@ def write_markdown_report(
 ) -> Path:
     """Write markdown report to project root by default."""
     if output_path is None:
-        output_path = Path(__file__).resolve().parent.parent / "pr-analysis-report.md"
+        output_path = get_default_report_path()
     else:
         output_path = Path(output_path)
 
@@ -472,7 +479,7 @@ def main():
     parser.add_argument('--stats', '-s', action='store_true', help='Show file details')
     parser.add_argument(
         '--md-output',
-        help='Markdown report output path (defaults to project root: pr-analysis-report.md)'
+        help='Markdown report output path (defaults to project root: pr-analysis-report-YYYYMMDD-HHMM.md)'
     )
     args = parser.parse_args()
 

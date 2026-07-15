@@ -102,7 +102,7 @@ Before diving into code, understand:
 4. Understand the business requirement
 5. Note any relevant architectural decisions
 
-> For large diffs, pipe the diff through [`scripts/pr-analyzer.py`](scripts/pr-analyzer.py) (`git diff main...HEAD | python scripts/pr-analyzer.py`) to triage complexity and get a suggested review approach before reading; it also writes `pr-analysis-report.md` to the project root.
+> For large diffs, pipe the diff through [`scripts/pr-analyzer.py`](scripts/pr-analyzer.py) (`git diff main...HEAD | python scripts/pr-analyzer.py`) to triage complexity and get a suggested review approach before reading; it also writes `pr-analysis-report-YYYYMMDD-HHMM.md` to the project root.
 
 ### Phase 2: High-Level Review (5-10 minutes)
 
