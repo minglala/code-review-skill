@@ -45,6 +45,7 @@ It covers **20+ languages and frameworks** with over **21,000 lines** of careful
 
 - **Progressive Disclosure** — Core skill is ~220 lines; language guides (~200–1,100 lines each) load only when needed.
 - **Four-Phase Review Process** — Structured workflow from understanding scope to delivering clear feedback.
+- **Root Markdown Deliverable** — After each full review, output a complete `code-review-report-YYYYMMDD-HHMM.md` in the project root.
 - **Severity Labeling** — Every finding is categorized: `blocking` · `important` · `nit` · `suggestion` · `learning` · `praise`
 - **Security-First** — Dedicated security checklists per language ecosystem.
 - **Collaborative Tone** — Questions over commands, suggestions over mandates.
@@ -245,6 +246,8 @@ Phase 3 - Line-by-Line Analysis
                     v
 Phase 4 - Summary & Decision
   Structured feedback - Approval status - Action items
+  Write full markdown report to project root:
+  code-review-report-YYYYMMDD-HHMM.md
 ```
 
 ---
@@ -348,6 +351,8 @@ Once installed, activate the skill in your Claude Code session:
 ```
 Use code-review-skill to review this PR
 ```
+
+The full review result should be saved as a markdown file in the project root: `code-review-report-YYYYMMDD-HHMM.md`.
 
 Or create a custom slash command in `.claude/commands/`:
 
@@ -470,6 +475,7 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 
 - **渐进式加载** — 核心技能仅 ~220 行，各语言指南（每份 200–1,100 行）仅在需要时才加载。
 - **四阶段审查流程** — 从理解 PR 范围到输出清晰反馈，每一步都有规可循。
+- **根目录 Markdown 交付物** — 每次完整审查结束后，在项目根目录输出 `code-review-report-YYYYMMDD-HHMM.md`。
 - **严重性标记** — 每条发现均分级：`blocking` · `important` · `nit` · `suggestion` · `learning` · `praise`
 - **安全优先** — 每个语言生态均配备专属安全检查清单。
 - **协作式语气** — 以提问替代命令，以建议替代指令。
@@ -532,6 +538,8 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
                     v
 阶段四 - 总结与决策
   结构化反馈 - 审批状态 - 后续行动项
+  将完整审查报告写入项目根目录：
+  code-review-report-YYYYMMDD-HHMM.md
 ```
 
 ---
@@ -635,6 +643,8 @@ cp -r code-review-skill ~/.claude/plugins/your-plugin/skills/code-review/
 ```
 Use code-review-skill to review this PR
 ```
+
+完整审查结果应保存为项目根目录下的 markdown 文件：`code-review-report-YYYYMMDD-HHMM.md`。
 
 或在 `.claude/commands/` 中创建自定义斜杠命令：
 
