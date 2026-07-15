@@ -5,6 +5,7 @@ import importlib.util
 import os
 import tempfile
 import unittest
+from datetime import datetime
 
 # The script has a hyphen in its name, so load it by path.
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -430,6 +431,11 @@ class MarkdownReportTest(unittest.TestCase):
                 content = f.read()
             self.assertIn('# PR Analysis Report', content)
             self.assertIn('## Files', content)
+
+    def test_get_default_report_path_contains_timestamp_to_minute(self):
+        fixed_time = datetime(2026, 7, 15, 14, 37, 55)
+        report_path = pr_analyzer.get_default_report_path(current_time=fixed_time)
+        self.assertTrue(str(report_path).endswith('pr-analysis-report-20260715-1437.md'))
 
 
 if __name__ == '__main__':
